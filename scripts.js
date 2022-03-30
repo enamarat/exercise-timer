@@ -1,4 +1,4 @@
-const programs = [];
+let programs = [];
 
 const createProgram = () => {
   const program_name = document.querySelector("#program_input").value;
@@ -11,6 +11,8 @@ const createProgram = () => {
 
   const program = {name: program_name};
   programs.push(program);
+  localStorage.setItem('programs', JSON.stringify(programs));
+  console.log(JSON.parse(localStorage.getItem('programs')));
   
   document.querySelector("#programs").innerHTML = `<h2>Programs</h2>`;
   programs.map(program => {
@@ -87,17 +89,10 @@ const createExercise = (event) => {
         });
       }
     }
-    console.log(programs);
+    //console.log(programs);
+    localStorage.setItem('programs', JSON.stringify(programs));
 
     // display the exercise
-    /*const div = document.createElement('DIV');
-    div.innerHTML = `
-      <h3>${event.target.parentNode.querySelector(".exercise_name").value}</h3>
-      <p>${event.target.parentNode.querySelector(".exercise_time").value}</p>
-      <p>${event.target.parentNode.querySelector(".exercise_sets").value}</p>
-    `;
-    event.target.parentNode.parentNode.parentNode.querySelector('.exercises_list').appendChild(div);*/
-    
     const row = document.createElement("TR");
     row.innerHTML = `
       <td>${event.target.parentNode.querySelector(".exercise_name").value}</td>
@@ -118,6 +113,78 @@ const createExercise = (event) => {
 }
 
 
+const displaySavedPrograms = () => {
+  //localStorage.clear();
+  const loadedPrograms = JSON.parse(localStorage.getItem('programs'));
+  if (loadedPrograms != null) {
+    programs = loadedPrograms;
+  }
+
+  // display the list of exercises
+  let exercises = ``;
+  programs.map(program => {
+    const div = document.createElement('DIV');
+    let content = ``;
+  
+    if (program.exercises != undefined) {
+      for (let i = 0; i < program.exercises.length; i++) {
+        content += `
+        <tr>
+          <td>${program.exercises[i].exercise_name}</td>
+          <td>${program.exercises[i].exercise_time}</td>
+          <td>${program.exercises[i].excercise_sets}</td>
+          <td>${program.exercises[i].rest_time_between}</td>
+          <td>${program.exercises[i].rest_time_after}</td>
+        </tr>
+        `;
+      }
+    }
+    exercises = content;
+    
+    // display the list of programs
+    div.innerHTML += `
+        <div class="user_program">
+            <h3 class="program_title">${program.name}</h3>
+
+            <div class="exercise_creation">
+              <button class="add_exercise_button">New Exercise</button>
+              <div class="exercise_parameters">
+                  <h3>Exercise parameters</h3>
+                  <input class="exercise_name" maxLength="30" placeholder="name">
+                  <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
+                  <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
+                  <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
+                  <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
+                  <button class="exercise_button">Add Exercise</button>
+              </div>
+            </div>
+
+            <div class="exercises_list">
+              <h4>Exercises</h4>
+              <table class="exercise_table">
+                <thead>
+                  <tr>
+                    <th>Exercise</th>
+                    <th>Time, sec</th>
+                    <th>Number of sets</th>
+                    <th>Rest time between sets, sec</th>
+                    <th>Rest time after exercise, sec</th>
+                  </tr>
+                </thead>
+                <tbody>
+                ${exercises}
+                </tbody>
+              </table>
+            </div>
+
+        </div>
+    `;
+    document.querySelector("#programs").append(div);
+  });
+}
+
+
 document.querySelector("#program_button").addEventListener("click", createProgram);
 document.querySelector("#programs").addEventListener("click", showParameters);
 document.querySelector("#programs").addEventListener("click", createExercise);
+window.addEventListener("load", displaySavedPrograms);
