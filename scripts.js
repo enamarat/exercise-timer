@@ -23,11 +23,11 @@ const createProgram = () => {
               <button class="add_exercise_button">New Exercise</button>
               <div class="exercise_parameters">
                   <h3>Exercise parameters</h3>
-                  <input class="exercise_name" placeholder="name">
-                  <input class="exercise_time" type="number" min="0" placeholder="duration, seconds">
-                  <input class="exercise_sets" type="number" min="0" placeholder="number of sets">
-                  <input class="rest_time_between" type="number" min="0" placeholder="rest time between sets, seconds">
-                  <input class="rest_time_after" type="number" min="0" placeholder="rest time after the exercise, seconds">
+                  <input class="exercise_name" maxLength="30" placeholder="name">
+                  <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
+                  <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
+                  <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
+                  <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
                   <button class="exercise_button">Add Exercise</button>
               </div>
             </div>
