@@ -12,49 +12,46 @@ const createProgram = () => {
   const program = {name: program_name};
   programs.push(program);
   localStorage.setItem('programs', JSON.stringify(programs));
-  console.log(JSON.parse(localStorage.getItem('programs')));
+  //console.log(JSON.parse(localStorage.getItem('programs')));
   
-  document.querySelector("#programs").innerHTML = `<h2>Programs</h2>`;
-  programs.map(program => {
-    const div = document.createElement('DIV');
-    div.innerHTML += `
-        <div class="user_program">
-            <h3 class="program_title">${program.name}</h3>
+  const div = document.createElement('DIV');
+  div.innerHTML += `
+      <div class="user_program">
+          <h3 class="program_title">${program.name}</h3>
 
-            <div class="exercise_creation">
-              <button class="add_exercise_button">New Exercise</button>
-              <div class="exercise_parameters">
-                  <h3>Exercise parameters</h3>
-                  <input class="exercise_name" maxLength="30" placeholder="name">
-                  <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
-                  <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
-                  <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
-                  <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
-                  <button class="exercise_button">Add Exercise</button>
-              </div>
+          <div class="exercise_creation">
+            <button class="add_exercise_button">New Exercise</button>
+            <div class="exercise_parameters">
+                <h3>Exercise parameters</h3>
+                <input class="exercise_name" maxLength="30" placeholder="name">
+                <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
+                <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
+                <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
+                <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
+                <button class="exercise_button">Add Exercise</button>
             </div>
+          </div>
 
-            <div class="exercises_list">
-              <h4>Exercises</h4>
-              <table class="exercise_table">
-                <thead>
-                  <tr>
-                    <th>Exercise</th>
-                    <th>Time, sec</th>
-                    <th>Number of sets</th>
-                    <th>Rest time between sets, sec</th>
-                    <th>Rest time after exercise, sec</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
+          <div class="exercises_list">
+            <h4>Exercises</h4>
+            <table class="exercise_table">
+              <thead>
+                <tr>
+                  <th>Exercise</th>
+                  <th>Time, sec</th>
+                  <th>Number of sets</th>
+                  <th>Rest time between sets, sec</th>
+                  <th>Rest time after exercise, sec</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
 
-        </div>
-    `;
-    document.querySelector("#programs").append(div);
-  });
+      </div>
+  `;
+  document.querySelector("#programs").append(div);
   document.querySelector("#program_input").value = "";
 }
 
