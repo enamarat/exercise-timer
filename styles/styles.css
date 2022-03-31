@@ -52,6 +52,12 @@ h4 {
   margin-bottom: 0.5em;
 }
 
+/* Warning */
+#warning {
+  font-weight: bold;
+  color: tomato;
+}
+
 /* Programs */
 .user_program {
   margin-bottom: 1em;
