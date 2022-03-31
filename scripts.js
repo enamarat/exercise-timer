@@ -13,16 +13,23 @@ const createProgram = () => {
   programs.push(program);
   localStorage.setItem('programs', JSON.stringify(programs));
   
+  displayPrograms(program, "");
+  document.querySelector("#program_input").value = "";
+}
+
+
+const displayPrograms = (program, exercises) => {
   const div = document.createElement('DIV');
   div.innerHTML += `
       <div class="user_program">
           <h3 class="program_title">${program.name}</h3>
           <button class="delete_program_button">Delete</button>
+          <button class="start_button">Start</button>
 
           <div class="confirm_program_deletion">
               <h3 class="confirmation">Are you sure?</h3>
-              <button class="confirm_action">Yes</button>
-              <button class="cancel_action">No</button>
+              <button class="confirm_action_button">Yes</button>
+              <button class="cancel_action_button">No</button>
           </div>
 
           <div class="exercise_creation">
@@ -34,12 +41,11 @@ const createProgram = () => {
                 <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
                 <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
                 <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
-                <button class="exercise_button">Add Exercise</button>
+                <button class="exercise_button">+</button>
             </div>
           </div>
 
           <div class="exercises_list">
-            <h4>Exercises</h4>
             <table class="exercise_table">
               <thead>
                 <tr>
@@ -51,6 +57,7 @@ const createProgram = () => {
                 </tr>
               </thead>
               <tbody>
+              ${exercises}
               </tbody>
             </table>
           </div>
@@ -58,7 +65,6 @@ const createProgram = () => {
       </div>
   `;
   document.querySelector("#programs").append(div);
-  document.querySelector("#program_input").value = "";
 }
 
 
@@ -149,59 +155,14 @@ const displaySavedPrograms = () => {
     }
     exercises = content;
     
-    // display the list of programs
-    div.innerHTML += `
-        <div class="user_program">
-            <h3 class="program_title">${program.name}</h3>
-            <button class="delete_program_button">Delete</button>
-
-            <div class="confirm_program_deletion">
-              <h3 class="confirmation">Are you sure?</h3>
-              <button class="confirm_action">Yes</button>
-              <button class="cancel_action">No</button>
-            </div>
-
-            <div class="exercise_creation">
-              <button class="add_exercise_button">New Exercise</button>
-              <div class="exercise_parameters">
-                  <h3>Exercise parameters</h3>
-                  <input class="exercise_name" maxLength="30" placeholder="name">
-                  <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
-                  <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
-                  <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
-                  <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
-                  <button class="exercise_button">Add Exercise</button>
-              </div>
-            </div>
-
-            <div class="exercises_list">
-              <h4>Exercises</h4>
-              <table class="exercise_table">
-                <thead>
-                  <tr>
-                    <th>Exercise</th>
-                    <th>Time, sec</th>
-                    <th>Number of sets</th>
-                    <th>Rest time between sets, sec</th>
-                    <th>Rest time after exercise, sec</th>
-                  </tr>
-                </thead>
-                <tbody>
-                ${exercises}
-                </tbody>
-              </table>
-            </div>
-
-        </div>
-    `;
-    document.querySelector("#programs").append(div);
+    displayPrograms(program, exercises);
   });
 }
 
 
 // Delete program
 const deleteProgram = (event) => {
-  if (event.target.className == "confirm_action") {
+  if (event.target.className == "confirm_action_button") {
     const program_to_delete = event.target.parentNode.parentNode.querySelector(".program_title").textContent.trim();
     programs = programs.filter(program => program.name != program_to_delete);
     localStorage.setItem('programs', JSON.stringify(programs));
@@ -216,7 +177,7 @@ const showDeletionWindow = (event) => {
 }
 
 const hideDeletionWindow = (event) => {
-  if (event.target.className == "cancel_action") {
+  if (event.target.className == "cancel_action_button") {
     event.target.parentNode.style.display = "none";
   }
 }

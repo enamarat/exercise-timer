@@ -26,6 +26,65 @@ button:hover {
   color: white;
 }
 
+#program_button {
+  background-color: lightgreen;
+}
+
+#program_button:hover {
+  background-color: black;
+}
+
+.add_exercise_button {
+  background-color: skyblue;
+  margin-bottom: 10px;
+}
+
+.exercise_button {
+  background-color: lightgreen;
+}
+
+.delete_program_button {
+  background-color: tomato;
+  color: white;
+}
+
+.exercise_button {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.add_exercise_button,
+.delete_program_button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.delete_program_button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.confirm_action_button {
+  background-color: tomato;
+  margin-bottom: 5px;
+}
+
+.cancel_action_button {
+  background-color: lightgreen;
+  margin-bottom: 5px;
+}
+
+.start_button {
+  position: absolute;
+  left: 5px;
+  top : 5px;
+  z-index: 2;
+  padding: 10px;
+  background-color: lemonchiffon;
+  font-weight: bold;
+}
+
 /* Typography */
 h1 {
   font-size: 4em;
@@ -71,6 +130,10 @@ h4 {
   color: tomato;
 }
 
+.exercises_list {
+  margin-top: 5px;
+}
+
 /* Exercise parameters */
 .exercise_parameters {
   display: none;
@@ -79,23 +142,13 @@ h4 {
   align-items: center;
 }
 
+.exercise_parameters h3 {
+  margin-top: 0;
+}
+
 .exercise_parameters input {
   margin-bottom: 1em;
   width: 250px;
-}
-
-.exercise_button,
-.add_exercise_button,
-.delete_program_button {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-}
-
-.delete_program_button {
-  position: absolute;
-  right: 5px;
-  top: 5px;
 }
 
 .confirm_program_deletion {
@@ -110,19 +163,7 @@ h4 {
 }
 
 .confirmation {
-  color: red;
-}
-
-.confirm_action {
-  background-color: tomato;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.cancel_action {
-  background-color: limegreen;
-  color: white;
-  margin-bottom: 5px;
+  color: tomato;
 }
 
 /* Exercise table */
