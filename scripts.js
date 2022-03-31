@@ -12,12 +12,18 @@ const createProgram = () => {
   const program = {name: program_name};
   programs.push(program);
   localStorage.setItem('programs', JSON.stringify(programs));
-  //console.log(JSON.parse(localStorage.getItem('programs')));
   
   const div = document.createElement('DIV');
   div.innerHTML += `
       <div class="user_program">
           <h3 class="program_title">${program.name}</h3>
+          <button class="delete_program_button">Delete</button>
+
+          <div class="confirm_program_deletion">
+              <h3 class="confirmation">Are you sure?</h3>
+              <button class="confirm_action">Yes</button>
+              <button class="cancel_action">No</button>
+          </div>
 
           <div class="exercise_creation">
             <button class="add_exercise_button">New Exercise</button>
@@ -86,7 +92,6 @@ const createExercise = (event) => {
         });
       }
     }
-    //console.log(programs);
     localStorage.setItem('programs', JSON.stringify(programs));
 
     // display the exercise
@@ -112,6 +117,12 @@ const createExercise = (event) => {
 
 const displaySavedPrograms = () => {
   //localStorage.clear();
+  document.querySelector("#programs").innerHTML = `
+    <div id="programs">
+      <h2>Programs</h2>
+    </div>
+  `;
+  
   const loadedPrograms = JSON.parse(localStorage.getItem('programs'));
   if (loadedPrograms != null) {
     programs = loadedPrograms;
@@ -142,6 +153,13 @@ const displaySavedPrograms = () => {
     div.innerHTML += `
         <div class="user_program">
             <h3 class="program_title">${program.name}</h3>
+            <button class="delete_program_button">Delete</button>
+
+            <div class="confirm_program_deletion">
+              <h3 class="confirmation">Are you sure?</h3>
+              <button class="confirm_action">Yes</button>
+              <button class="cancel_action">No</button>
+            </div>
 
             <div class="exercise_creation">
               <button class="add_exercise_button">New Exercise</button>
@@ -181,7 +199,33 @@ const displaySavedPrograms = () => {
 }
 
 
+// Delete program
+const deleteProgram = (event) => {
+  if (event.target.className == "confirm_action") {
+    const program_to_delete = event.target.parentNode.parentNode.querySelector(".program_title").textContent.trim();
+    programs = programs.filter(program => program.name != program_to_delete);
+    localStorage.setItem('programs', JSON.stringify(programs));
+    displaySavedPrograms();
+  }
+}
+
+const showDeletionWindow = (event) => {
+  if (event.target.className == "delete_program_button") {
+    event.target.parentNode.querySelector(".confirm_program_deletion").style.display = "block";
+  }
+}
+
+const hideDeletionWindow = (event) => {
+  if (event.target.className == "cancel_action") {
+    event.target.parentNode.style.display = "none";
+  }
+}
+
+
 document.querySelector("#program_button").addEventListener("click", createProgram);
 document.querySelector("#programs").addEventListener("click", showParameters);
 document.querySelector("#programs").addEventListener("click", createExercise);
+document.querySelector("#programs").addEventListener("click", showDeletionWindow);
+document.querySelector("#programs").addEventListener("click", hideDeletionWindow);
+document.querySelector("#programs").addEventListener("click", deleteProgram);
 window.addEventListener("load", displaySavedPrograms);
