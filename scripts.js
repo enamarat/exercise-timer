@@ -232,8 +232,7 @@ const startTimer = (event) => {
   if (event.target.className == "start_button") {
     const program_title = event.target.parentNode.querySelector(".program_title").textContent;
     let data = null;
-    let excerciseNumber = 0;
-    //let count = 0;
+    excerciseNumber = 0;
   
     for (let i = 0; i < programs.length; i++) {
       if (programs[i].name == program_title) {
@@ -241,58 +240,37 @@ const startTimer = (event) => {
         break;
       }
     }
-    playSound(data.excercises[excerciseNumber].excercise_sets, data.excercises[excerciseNumber].excercise_time, data.excercises[excerciseNumber].rest_time_between, data.excercises[excerciseNumber].rest_time_after, 1);
+    playSound(data, 1, data.excercises.length, 0);
   }
 }
 
-
-const playSound = (sets, duration, timeBetween, timeAfter, count) => {
+//sets, duration, timeBetween, timeAfter
+const playSound = (data, count, excercisesLength, excerciseNumber) => {
   document.querySelector("#start_signal").play();
-  let timeCount = duration;
-  console.log(`duration ${duration}`);
+  let timeCount = data.excercises[excerciseNumber].excercise_time;
+  console.log(`duration ${data.excercises[excerciseNumber].excercise_time}`);
+ 
   const interval = setInterval(()=> {
     console.log(timeCount);
     timeCount--;
     if (timeCount == 0) {
       document.querySelector("#stop_rest").play();
       clearInterval(interval);
-      ///
-      if (count < sets) {
+      if (count < data.excercises[excerciseNumber].excercise_sets) {
         setTimeout(()=>{
-          //document.querySelector("#start_signal").play();
-          playSound(sets, duration, timeBetween, timeAfter, count+1);
-        }, 4000+(timeBetween*1000));
+          playSound(data, count+1, excercisesLength, excerciseNumber);
+        }, 4000+(data.excercises[excerciseNumber].rest_time_between*1000));
+      } else if (count == data.excercises[excerciseNumber].excercise_sets) {
+        console.log("end");
+        if (excerciseNumber < excercisesLength) {
+          setTimeout(()=>{
+            playSound(data, count+1, excercisesLength, excerciseNumber+1);
+          }, 4000+(data.excercises[excerciseNumber].rest_time_after*1000));
+        }
       }
     }
   }, 1000);
-
-  
 }
-
-// setTimeout(()=> document.querySelector("#stop_rest").play(), 4000);
-  //document.querySelector("#start_signal").play();
-  /*document.querySelector("#start_signal").addEventListener('ended', () => {
-    let timeCount = duration;
-    console.log(`duration ${duration}`);
-    const interval = setInterval(()=> {
-      console.log(timeCount);
-      timeCount--;
-      //
-      if (timeCount == 0) {
-        document.querySelector("#stop_rest").play();
-        clearInterval(interval);
-        count++;
-        if (count < sets) {
-          setTimeout(()=> document.querySelector("#start_signal").play(), 4000 + (timeBetween * 1000));
-        } else if (count == sets) {
-          if (excerciseNumber < data.excercises.length) {
-            excerciseNumber++;
-            restTime = timeAfter;
-          }
-        }
-      }
-    }, 1000);
-  });*/
 
 
 document.querySelector("#program_button").addEventListener("click", createProgram);
