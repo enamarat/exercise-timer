@@ -212,7 +212,6 @@ const deleteExercise = (event) => {
       }
     });
     localStorage.setItem('programs', JSON.stringify(programs));
-    console.log(event.target.parentNode.parentNode);
     event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
   }
 }
