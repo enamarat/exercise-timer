@@ -34,12 +34,12 @@ button:hover {
   background-color: black;
 }
 
-.add_exercise_button {
+.add_excercise_button {
   background-color: skyblue;
   margin-bottom: 10px;
 }
 
-.exercise_button {
+.excercise_button {
   background-color: lightgreen;
 }
 
@@ -48,12 +48,12 @@ button:hover {
   color: white;
 }
 
-.exercise_button {
+.excercise_button {
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.add_exercise_button,
+.add_excercise_button,
 .delete_program_button {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -130,23 +130,23 @@ h4 {
   color: tomato;
 }
 
-.exercises_list {
+.excercises_list {
   margin-top: 5px;
 }
 
 /* Exercise parameters */
-.exercise_parameters {
+.excercise_parameters {
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.exercise_parameters h3 {
+.excercise_parameters h3 {
   margin-top: 0;
 }
 
-.exercise_parameters input {
+.excercise_parameters input {
   margin-bottom: 1em;
   width: 250px;
 }
@@ -167,18 +167,18 @@ h4 {
 }
 
 /* Exercise table */
-.exercise_table thead {
+.excercise_table thead {
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }
 
-.exercise_table th {
+.excercise_table th {
   font-weight: bold;
   border-right: 2px solid black;
   padding: 5px;
 }
 
-.exercise_table th:last-of-type {
+.excercise_table th:last-of-type {
   border-right: none;
 }
 
@@ -186,7 +186,7 @@ h4 {
   position: relative;
 }
 
-.delete_exercise_button {
+.delete_excercise_button {
   position: absolute;
   right: 5px;
   padding-left: 10px;
@@ -197,7 +197,7 @@ h4 {
   font-size: 10px;
 }
 
-.exercise_id {
+.excercise_id {
   display: none;
 }
 

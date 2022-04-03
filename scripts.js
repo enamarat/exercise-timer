@@ -30,7 +30,7 @@ const createProgram = () => {
 }
 
 
-const displayPrograms = (program, exercises) => {
+const displayPrograms = (program, excercises) => {
   const div = document.createElement('DIV');
   div.innerHTML += `
       <div class="user_program">
@@ -44,32 +44,32 @@ const displayPrograms = (program, exercises) => {
               <button class="cancel_action_button">No</button>
           </div>
 
-          <div class="exercise_creation">
-            <button class="add_exercise_button">New Exercise</button>
-            <div class="exercise_parameters">
+          <div class="excercise_creation">
+            <button class="add_excercise_button">New Exercise</button>
+            <div class="excercise_parameters">
                 <h3>Exercise parameters</h3>
-                <input class="exercise_name" maxLength="30" placeholder="name">
-                <input class="exercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
-                <input class="exercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
+                <input class="excercise_name" maxLength="30" placeholder="name">
+                <input class="excercise_time" type="number" min="0" max="9999" placeholder="duration, seconds">
+                <input class="excercise_sets" type="number" min="0" max="9999" placeholder="number of sets">
                 <input class="rest_time_between" type="number" min="0" max="9999" placeholder="rest time between sets, seconds">
-                <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the exercise, seconds">
-                <button class="exercise_button">+</button>
+                <input class="rest_time_after" type="number" min="0" max="9999" placeholder="rest time after the excercise, seconds">
+                <button class="excercise_button">+</button>
             </div>
           </div>
 
-          <div class="exercises_list">
-            <table class="exercise_table">
+          <div class="excercises_list">
+            <table class="excercise_table">
               <thead>
                 <tr>
                   <th>Exercise</th>
                   <th>Time, sec</th>
                   <th>Number of sets</th>
                   <th>Rest time between sets, sec</th>
-                  <th>Rest time after exercise, sec</th>
+                  <th>Rest time after excercise, sec</th>
                 </tr>
               </thead>
               <tbody>
-              ${exercises}
+              ${excercises}
               </tbody>
             </table>
           </div>
@@ -81,10 +81,10 @@ const displayPrograms = (program, exercises) => {
 
 
 const showParameters = (event) => {
-  if (event.target.className == "add_exercise_button" && event.target.textContent == "New Exercise") {
+  if (event.target.className == "add_excercise_button" && event.target.textContent == "New Exercise") {
     event.target.parentNode.childNodes[3].style.display = "flex";
     event.target.textContent = "Hide";
-  } else if (event.target.className == "add_exercise_button" && event.target.textContent == "Hide") {
+  } else if (event.target.className == "add_excercise_button" && event.target.textContent == "Hide") {
     event.target.parentNode.childNodes[3].style.display = "none";
     event.target.textContent = "New Exercise";
   }
@@ -92,45 +92,56 @@ const showParameters = (event) => {
 
 
 const createExercise = (event) => {
-  if (event.target.className == "exercise_button") {
+  if (event.target.className == "excercise_button") {
     const program_title = event.target.parentNode.parentNode.parentNode.querySelector(".program_title").textContent.trim();
-    let exercise_id = "";
+    let excercise_id = "";
+    document.querySelector("#warning").textContent = "";
 
-    // add the exercise to the program
+    // don't accept empty fields
+    if (event.target.parentNode.querySelector(".excercise_name").value.length == 0 ||
+        event.target.parentNode.querySelector(".excercise_time").value.length == 0 ||
+        event.target.parentNode.querySelector(".excercise_sets").value.length == 0 ||
+        event.target.parentNode.querySelector(".rest_time_between").value.length == 0 ||
+        event.target.parentNode.querySelector(".rest_time_after").value.length == 0) {
+          document.querySelector("#warning").textContent = "Fill in all the fields, please!";
+          return 0;
+    }
+
+    // add the excercise to the program
     for (let i = 0; i < programs.length; i++) {
       if (programs[i].name == program_title) {
-        if (programs[i].exercises == undefined) {
-          programs[i].exercises = [];
+        if (programs[i].excercises == undefined) {
+          programs[i].excercises = [];
         }
-        programs[i].exercises.push({
-          exercise_name: event.target.parentNode.querySelector(".exercise_name").value,
-          exercise_time: event.target.parentNode.querySelector(".exercise_time").value,
-          excercise_sets: event.target.parentNode.querySelector(".exercise_sets").value,
+        programs[i].excercises.push({
+          excercise_name: event.target.parentNode.querySelector(".excercise_name").value,
+          excercise_time: event.target.parentNode.querySelector(".excercise_time").value,
+          excercise_sets: event.target.parentNode.querySelector(".excercise_sets").value,
           rest_time_between: event.target.parentNode.querySelector(".rest_time_between").value,
           rest_time_after: event.target.parentNode.querySelector(".rest_time_after").value,
-          exercise_id: programs[i].exercises.length
+          excercise_id: programs[i].excercises.length
         });
-        exercise_id = programs[i].exercises.length;
+        excercise_id = programs[i].excercises.length;
       }
     }
     localStorage.setItem('programs', JSON.stringify(programs));
 
-    // display the exercise
+    // display the excercise
     const row = document.createElement("TR");
     row.innerHTML = `
-      <td class="exercise_id">${exercise_id}</td>
-      <td>${event.target.parentNode.querySelector(".exercise_name").value}</td>
-      <td>${event.target.parentNode.querySelector(".exercise_time").value}</td>
-      <td>${event.target.parentNode.querySelector(".exercise_sets").value}</td>
+      <td class="excercise_id">${excercise_id}</td>
+      <td>${event.target.parentNode.querySelector(".excercise_name").value}</td>
+      <td>${event.target.parentNode.querySelector(".excercise_time").value}</td>
+      <td>${event.target.parentNode.querySelector(".excercise_sets").value}</td>
       <td>${event.target.parentNode.querySelector(".rest_time_between").value}</td>
-      <td class="last_column">${event.target.parentNode.querySelector(".rest_time_after").value} <button class="delete_exercise_button">x</button></td>
+      <td class="last_column">${event.target.parentNode.querySelector(".rest_time_after").value} <button class="delete_excercise_button">x</button></td>
     `;
-    event.target.parentNode.parentNode.parentNode.querySelector('.exercises_list').querySelector(".exercise_table").appendChild(row);
+    event.target.parentNode.parentNode.parentNode.querySelector('.excercises_list').querySelector(".excercise_table").appendChild(row);
   
     // empty fields
-    event.target.parentNode.querySelector(".exercise_name").value = "";
-    event.target.parentNode.querySelector(".exercise_time").value = "";
-    event.target.parentNode.querySelector(".exercise_sets").value = "";
+    event.target.parentNode.querySelector(".excercise_name").value = "";
+    event.target.parentNode.querySelector(".excercise_time").value = "";
+    event.target.parentNode.querySelector(".excercise_sets").value = "";
     event.target.parentNode.querySelector(".rest_time_between").value = "";
     event.target.parentNode.querySelector(".rest_time_after").value = "";
   }
@@ -150,28 +161,28 @@ const displaySavedPrograms = () => {
     programs = loadedPrograms;
   }
 
-  // display the list of exercises
-  let exercises = ``;
+  // display the list of excercises
+  let excercises = ``;
   programs.map(program => {
     const div = document.createElement('DIV');
     let content = ``;
   
-    if (program.exercises != undefined) {
-      for (let i = 0; i < program.exercises.length; i++) {
+    if (program.excercises != undefined) {
+      for (let i = 0; i < program.excercises.length; i++) {
         content += `
         <tr>
-          <td class="exercise_id">${program.exercises[i].exercise_id}</td>
-          <td>${program.exercises[i].exercise_name}</td>
-          <td>${program.exercises[i].exercise_time}</td>
-          <td>${program.exercises[i].excercise_sets}</td>
-          <td>${program.exercises[i].rest_time_between}</td>
-          <td class="last_column">${program.exercises[i].rest_time_after} <button class="delete_exercise_button">x</button></td>
+          <td class="excercise_id">${program.excercises[i].excercise_id}</td>
+          <td>${program.excercises[i].excercise_name}</td>
+          <td>${program.excercises[i].excercise_time}</td>
+          <td>${program.excercises[i].excercise_sets}</td>
+          <td>${program.excercises[i].rest_time_between}</td>
+          <td class="last_column">${program.excercises[i].rest_time_after} <button class="delete_excercise_button">x</button></td>
         </tr>
         `;
       }
     }
-    exercises = content;
-    displayPrograms(program, exercises);
+    excercises = content;
+    displayPrograms(program, excercises);
   });
 }
 
@@ -198,15 +209,15 @@ const hideDeletionWindow = (event) => {
 }
 
 const deleteExercise = (event) => {
-  if (event.target.className == "delete_exercise_button") {
+  if (event.target.className == "delete_excercise_button") {
     const program_title = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector(".program_title").textContent.trim();
-    const exercise_id = event.target.parentNode.parentNode.childNodes[1].textContent.trim();
+    const excercise_id = event.target.parentNode.parentNode.childNodes[1].textContent.trim();
     
     programs.forEach(program => {
       if (program.name == program_title) {
-        program.exercises.forEach(exercise => {
-            if (exercise.exercise_id == exercise_id) {
-              program.exercises = program.exercises.filter(element => element.exercise_id != exercise_id);
+        program.excercises.forEach(excercise => {
+            if (excercise.excercise_id == excercise_id) {
+              program.excercises = program.excercises.filter(element => element.excercise_id != excercise_id);
             }
         });
       }
@@ -216,6 +227,73 @@ const deleteExercise = (event) => {
   }
 }
 
+// Start timer
+const startTimer = (event) => {
+  if (event.target.className == "start_button") {
+    const program_title = event.target.parentNode.querySelector(".program_title").textContent;
+    let data = null;
+    let excerciseNumber = 0;
+    //let count = 0;
+  
+    for (let i = 0; i < programs.length; i++) {
+      if (programs[i].name == program_title) {
+        data = programs[i];
+        break;
+      }
+    }
+    playSound(data.excercises[excerciseNumber].excercise_sets, data.excercises[excerciseNumber].excercise_time, data.excercises[excerciseNumber].rest_time_between, data.excercises[excerciseNumber].rest_time_after, 1);
+  }
+}
+
+
+const playSound = (sets, duration, timeBetween, timeAfter, count) => {
+  document.querySelector("#start_signal").play();
+  let timeCount = duration;
+  console.log(`duration ${duration}`);
+  const interval = setInterval(()=> {
+    console.log(timeCount);
+    timeCount--;
+    if (timeCount == 0) {
+      document.querySelector("#stop_rest").play();
+      clearInterval(interval);
+      ///
+      if (count < sets) {
+        setTimeout(()=>{
+          //document.querySelector("#start_signal").play();
+          playSound(sets, duration, timeBetween, timeAfter, count+1);
+        }, 4000+(timeBetween*1000));
+      }
+    }
+  }, 1000);
+
+  
+}
+
+// setTimeout(()=> document.querySelector("#stop_rest").play(), 4000);
+  //document.querySelector("#start_signal").play();
+  /*document.querySelector("#start_signal").addEventListener('ended', () => {
+    let timeCount = duration;
+    console.log(`duration ${duration}`);
+    const interval = setInterval(()=> {
+      console.log(timeCount);
+      timeCount--;
+      //
+      if (timeCount == 0) {
+        document.querySelector("#stop_rest").play();
+        clearInterval(interval);
+        count++;
+        if (count < sets) {
+          setTimeout(()=> document.querySelector("#start_signal").play(), 4000 + (timeBetween * 1000));
+        } else if (count == sets) {
+          if (excerciseNumber < data.excercises.length) {
+            excerciseNumber++;
+            restTime = timeAfter;
+          }
+        }
+      }
+    }, 1000);
+  });*/
+
 
 document.querySelector("#program_button").addEventListener("click", createProgram);
 document.querySelector("#programs").addEventListener("click", showParameters);
@@ -224,4 +302,6 @@ document.querySelector("#programs").addEventListener("click", showDeletionWindow
 document.querySelector("#programs").addEventListener("click", hideDeletionWindow);
 document.querySelector("#programs").addEventListener("click", deleteProgram);
 document.querySelector("#programs").addEventListener("click", deleteExercise);
+document.querySelector("#programs").addEventListener("click", startTimer);
 window.addEventListener("load", displaySavedPrograms);
+//document.querySelector("#start_signal").addEventListener('ended', playSound);
