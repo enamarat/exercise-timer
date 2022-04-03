@@ -9,6 +9,18 @@ const createProgram = () => {
       return 0;
   }
 
+  // check if the program name already exists
+  let duplicateFound = false;
+  programs.map(program => {
+    if (program.name == program_name) {
+      document.querySelector("#warning").textContent = "A program with such name already exists!";
+      duplicateFound = true;
+    }
+  });
+  if (duplicateFound) {
+    return 0;
+  }
+
   const program = {name: program_name};
   programs.push(program);
   localStorage.setItem('programs', JSON.stringify(programs));
@@ -82,6 +94,7 @@ const showParameters = (event) => {
 const createExercise = (event) => {
   if (event.target.className == "exercise_button") {
     const program_title = event.target.parentNode.parentNode.parentNode.querySelector(".program_title").textContent.trim();
+    let exercise_id = "";
 
     // add the exercise to the program
     for (let i = 0; i < programs.length; i++) {
@@ -94,8 +107,10 @@ const createExercise = (event) => {
           exercise_time: event.target.parentNode.querySelector(".exercise_time").value,
           excercise_sets: event.target.parentNode.querySelector(".exercise_sets").value,
           rest_time_between: event.target.parentNode.querySelector(".rest_time_between").value,
-          rest_time_after: event.target.parentNode.querySelector(".rest_time_after").value
+          rest_time_after: event.target.parentNode.querySelector(".rest_time_after").value,
+          exercise_id: programs[i].exercises.length
         });
+        exercise_id = programs[i].exercises.length;
       }
     }
     localStorage.setItem('programs', JSON.stringify(programs));
@@ -103,11 +118,12 @@ const createExercise = (event) => {
     // display the exercise
     const row = document.createElement("TR");
     row.innerHTML = `
+      <td class="exercise_id">${exercise_id}</td>
       <td>${event.target.parentNode.querySelector(".exercise_name").value}</td>
       <td>${event.target.parentNode.querySelector(".exercise_time").value}</td>
       <td>${event.target.parentNode.querySelector(".exercise_sets").value}</td>
       <td>${event.target.parentNode.querySelector(".rest_time_between").value}</td>
-      <td>${event.target.parentNode.querySelector(".rest_time_after").value}</td>
+      <td class="last_column">${event.target.parentNode.querySelector(".rest_time_after").value} <button class="delete_exercise_button">x</button></td>
     `;
     event.target.parentNode.parentNode.parentNode.querySelector('.exercises_list').querySelector(".exercise_table").appendChild(row);
   
@@ -144,23 +160,22 @@ const displaySavedPrograms = () => {
       for (let i = 0; i < program.exercises.length; i++) {
         content += `
         <tr>
+          <td class="exercise_id">${program.exercises[i].exercise_id}</td>
           <td>${program.exercises[i].exercise_name}</td>
           <td>${program.exercises[i].exercise_time}</td>
           <td>${program.exercises[i].excercise_sets}</td>
           <td>${program.exercises[i].rest_time_between}</td>
-          <td>${program.exercises[i].rest_time_after}</td>
+          <td class="last_column">${program.exercises[i].rest_time_after} <button class="delete_exercise_button">x</button></td>
         </tr>
         `;
       }
     }
     exercises = content;
-    
     displayPrograms(program, exercises);
   });
 }
 
-
-// Delete program
+// Deletion
 const deleteProgram = (event) => {
   if (event.target.className == "confirm_action_button") {
     const program_to_delete = event.target.parentNode.parentNode.querySelector(".program_title").textContent.trim();
@@ -182,6 +197,26 @@ const hideDeletionWindow = (event) => {
   }
 }
 
+const deleteExercise = (event) => {
+  if (event.target.className == "delete_exercise_button") {
+    const program_title = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector(".program_title").textContent.trim();
+    const exercise_id = event.target.parentNode.parentNode.childNodes[1].textContent.trim();
+    
+    programs.forEach(program => {
+      if (program.name == program_title) {
+        program.exercises.forEach(exercise => {
+            if (exercise.exercise_id == exercise_id) {
+              program.exercises = program.exercises.filter(element => element.exercise_id != exercise_id);
+            }
+        });
+      }
+    });
+    localStorage.setItem('programs', JSON.stringify(programs));
+    console.log(event.target.parentNode.parentNode);
+    event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+  }
+}
+
 
 document.querySelector("#program_button").addEventListener("click", createProgram);
 document.querySelector("#programs").addEventListener("click", showParameters);
@@ -189,4 +224,5 @@ document.querySelector("#programs").addEventListener("click", createExercise);
 document.querySelector("#programs").addEventListener("click", showDeletionWindow);
 document.querySelector("#programs").addEventListener("click", hideDeletionWindow);
 document.querySelector("#programs").addEventListener("click", deleteProgram);
+document.querySelector("#programs").addEventListener("click", deleteExercise);
 window.addEventListener("load", displaySavedPrograms);

@@ -167,10 +167,39 @@ h4 {
 }
 
 /* Exercise table */
+.exercise_table thead {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
 .exercise_table th {
   font-weight: bold;
-  border: 2px solid black;
+  border-right: 2px solid black;
   padding: 5px;
 }
+
+.exercise_table th:last-of-type {
+  border-right: none;
+}
+
+.last_column {
+  position: relative;
+}
+
+.delete_exercise_button {
+  position: absolute;
+  right: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 25% 25%;
+  background-color: tomato;
+  color: white;
+  font-size: 10px;
+}
+
+.exercise_id {
+  display: none;
+}
+
 
 
