@@ -266,6 +266,8 @@ const playSound = (data, count, excercisesLength, excerciseNumber) => {
           setTimeout(()=>{
             playSound(data, 1, excercisesLength, excerciseNumber+1);
           }, 4000+(data.excercises[excerciseNumber].rest_time_after*1000));
+        } else if (excerciseNumber == excercisesLength-1) {
+          setTimeout(()=>document.querySelector("#mission_complete").play(), 4000);
         }
       }
     }
@@ -282,4 +284,3 @@ document.querySelector("#programs").addEventListener("click", deleteProgram);
 document.querySelector("#programs").addEventListener("click", deleteExercise);
 document.querySelector("#programs").addEventListener("click", startTimer);
 window.addEventListener("load", displaySavedPrograms);
-//document.querySelector("#start_signal").addEventListener('ended', playSound);
