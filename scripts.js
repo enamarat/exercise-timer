@@ -262,9 +262,9 @@ const playSound = (data, count, excercisesLength, excerciseNumber) => {
         }, 4000+(data.excercises[excerciseNumber].rest_time_between*1000));
       } else if (count == data.excercises[excerciseNumber].excercise_sets) {
         console.log("end");
-        if (excerciseNumber < excercisesLength) {
+        if (excerciseNumber < excercisesLength-1) {
           setTimeout(()=>{
-            playSound(data, count+1, excercisesLength, excerciseNumber+1);
+            playSound(data, 1, excercisesLength, excerciseNumber+1);
           }, 4000+(data.excercises[excerciseNumber].rest_time_after*1000));
         }
       }
