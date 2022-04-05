@@ -232,6 +232,7 @@ const deleteExercise = (event) => {
 // Start timer
 const startTimer = (event) => {
   if (event.target.className == "start_button") {
+    document.querySelector("#warning").textContent = "";
     timerStopped = false;
     const program_title = event.target.parentNode.querySelector(".program_title").textContent;
     let data = null;
@@ -243,9 +244,19 @@ const startTimer = (event) => {
         break;
       }
     }
-    playSound(data, 1, data.exercises.length, 0);
+    
+    if (data.exercises == undefined) {
+      document.querySelector("#warning").textContent = "This program has no exercises yet!";
+    } else {
+      if (data.exercises.length == 0) {
+        document.querySelector("#warning").textContent = "This program has no exercises yet!";
+      } else {
+        playSound(data, 1, data.exercises.length, 0);
+      }
+    }
   }
 }
+
 
 const showTimer = (data, exerciseNumber, set, timeCount) => {
   document.querySelector("#exercise_name").textContent = `${data.exercises[exerciseNumber].exercise_name}`;
