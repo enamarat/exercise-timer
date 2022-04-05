@@ -34,12 +34,12 @@ button:hover {
   background-color: black;
 }
 
-.add_excercise_button {
+.add_exercise_button {
   background-color: skyblue;
   margin-bottom: 10px;
 }
 
-.excercise_button {
+.exercise_button {
   background-color: lightgreen;
 }
 
@@ -48,12 +48,12 @@ button:hover {
   color: white;
 }
 
-.excercise_button {
+.exercise_button {
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.add_excercise_button,
+.add_exercise_button,
 .delete_program_button {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -83,6 +83,20 @@ button:hover {
   padding: 10px;
   background-color: lemonchiffon;
   font-weight: bold;
+}
+
+#stop_exercise_button {
+  display: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: tomato;
+  color: white;
+}
+
+#stop_exercise_button:hover {
+  background-color: black;
 }
 
 /* Typography */
@@ -130,23 +144,23 @@ h4 {
   color: tomato;
 }
 
-.excercises_list {
+.exercises_list {
   margin-top: 5px;
 }
 
 /* Exercise parameters */
-.excercise_parameters {
+.exercise_parameters {
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.excercise_parameters h3 {
+.exercise_parameters h3 {
   margin-top: 0;
 }
 
-.excercise_parameters input {
+.exercise_parameters input {
   margin-bottom: 1em;
   width: 250px;
 }
@@ -167,18 +181,18 @@ h4 {
 }
 
 /* Exercise table */
-.excercise_table thead {
+.exercise_table thead {
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }
 
-.excercise_table th {
+.exercise_table th {
   font-weight: bold;
   border-right: 2px solid black;
   padding: 5px;
 }
 
-.excercise_table th:last-of-type {
+.exercise_table th:last-of-type {
   border-right: none;
 }
 
@@ -186,7 +200,7 @@ h4 {
   position: relative;
 }
 
-.delete_excercise_button {
+.delete_exercise_button {
   position: absolute;
   right: 5px;
   padding-left: 10px;
@@ -197,7 +211,7 @@ h4 {
   font-size: 10px;
 }
 
-.excercise_id {
+.exercise_id {
   display: none;
 }
 
