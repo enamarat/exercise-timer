@@ -105,8 +105,8 @@ const createExercise = (event) => {
         event.target.parentNode.querySelector(".exercise_sets").value.length == 0 ||
         event.target.parentNode.querySelector(".rest_time_between").value.length == 0 ||
         event.target.parentNode.querySelector(".rest_time_after").value.length == 0) {
-          document.querySelector("#warning").textContent = "Fill in all the fields, please!";
-          return 0;
+        document.querySelector("#warning").textContent = "Fill in all the fields, please!";
+        return 0;
     }
 
     // add the exercise to the program
@@ -123,7 +123,7 @@ const createExercise = (event) => {
           rest_time_after: event.target.parentNode.querySelector(".rest_time_after").value,
           exercise_id: programs[i].exercises.length
         });
-        exercise_id = programs[i].exercises.length;
+        exercise_id = programs[i].exercises[programs[i].exercises.length-1].exercise_id;
       }
     }
     localStorage.setItem('programs', JSON.stringify(programs));
@@ -214,7 +214,7 @@ const deleteExercise = (event) => {
   if (event.target.className == "delete_exercise_button") {
     const program_title = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector(".program_title").textContent.trim();
     const exercise_id = event.target.parentNode.parentNode.childNodes[1].textContent.trim();
-    
+   
     programs.forEach(program => {
       if (program.name == program_title) {
         program.exercises.forEach(exercise => {
