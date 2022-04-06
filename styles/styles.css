@@ -138,7 +138,8 @@ h4 {
   position: relative;
 }
 
-.program_title {
+.program_title, 
+#program_name {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   color: tomato;

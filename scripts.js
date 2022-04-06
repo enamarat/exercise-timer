@@ -259,6 +259,7 @@ const startTimer = (event) => {
 
 
 const showTimer = (data, exerciseNumber, set, timeCount) => {
+  document.querySelector("#program_name").textContent = `${data.name}`;
   document.querySelector("#exercise_name").textContent = `${data.exercises[exerciseNumber].exercise_name}`;
   document.querySelector("#set_number").textContent = `set: ${set}`;
   document.querySelector("#counter").textContent = timeCount;
@@ -269,6 +270,7 @@ const showTimer = (data, exerciseNumber, set, timeCount) => {
 
 
 const hideTimer = () => {
+  document.querySelector("#program_name").textContent = "";
   document.querySelector("#exercise_name").textContent = "";
   document.querySelector("#set_number").textContent = "";
   document.querySelector("#counter").textContent = "";
